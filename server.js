@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRoutes = require('./routes/authRoutes')
 const transactionRoutes = require('./routes/transactionRoutes')
+const dashboardRoutes = require("./routes/dashboardRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 dotenv.config();
 
@@ -11,6 +13,9 @@ const app = express();
 app.use(express.json());
 app.use('/api/auth', authRoutes)
 app.use('/api/transactions', transactionRoutes)
+app.use('/api/dashboard',dashboardRoutes)
+app.use('/api/user',userRoutes)
+
 
 mongoose.connect(process.env.MONGO_URI).then(()=>console.log("Mongo db is connected")).catch((err)=>console.log("error",err));
 

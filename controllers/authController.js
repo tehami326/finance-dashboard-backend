@@ -4,7 +4,12 @@ const jwt = require("jsonwebtoken");
 
 
 const register = async (req,res)=>{
-    const {name,password,email,role} = req.body;
+    try{
+  const {name,password,email,role} = req.body;
+
+  if(!name || !email || !password){
+    return res.status(400).json({ message: "Please fill all fields" })
+}
 
     const existingUser = await User.findOne({email});
     if(existingUser){
@@ -16,12 +21,20 @@ const register = async (req,res)=>{
         name,email,password:hashedPassword,role
     })
     res.status(201).json({message:"User created successfully"});
-
+    }
+  
+catch(err){
+        res.status(500).json({ message: err.message })
+    }
 
 }
 
 const login = async(req,res)=>{
-    const {email,password} = req.body;
+    try{
+ const {email,password} = req.body;
+ if(!email || !password){
+    return res.status(400).json({ message: "Please fill email and password" })
+}
 
     const existingUser = await User.findOne({email});
     if(!existingUser){
@@ -35,6 +48,10 @@ const login = async(req,res)=>{
 
    const token = jwt.sign({ id: existingUser._id, role: existingUser.role }, process.env.JWT_SECRET)
    res.status(200).json({ message: "Login successful", token })
+    }catch(err){
+        res.status(500).json({ message: err.message })
+    }
+   
 }
 
 module.exports = {register,login};
