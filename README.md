@@ -2,6 +2,10 @@
 
 A backend REST API for a finance dashboard system built with Node.js, Express, and MongoDB.
 
+## Live API
+
+https://finance-dashboard-backend-iq5l.onrender.com
+
 ## Tech Stack
 
 - Node.js
